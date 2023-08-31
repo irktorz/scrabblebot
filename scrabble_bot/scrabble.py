@@ -24,6 +24,7 @@ class Scrabble:
         self.available = self.generate_letters()
         self.hand = self.generate_hand(self.available)
 
+    # generates all letters available in a standard game of Scrabble
     def generate_letters(self):
         letters = []
         for i in range(100):
@@ -84,6 +85,7 @@ class Scrabble:
 
         return letters
 
+    # Generate a new hand and remove the letters drawn from available letters
     def generate_hand(self, available):
         hand = []
         for i in range(7):
@@ -91,31 +93,27 @@ class Scrabble:
             hand.append(let)
             self.available.remove(let)
 
+        self.hand = hand
         return hand
 
+    # returns the hand
     def get_hand(self):
         return self.hand
 
+    # returns the available letters
     def get_available(self):
         return self.available
 
-# Suggested integration of WordSet class
-
 
 def main():
+    # Generates an inital hand and all the letters available after the hand has been made
     game = Scrabble()
-    # Generate letters here
-    print(game.get_available())
 
-    # Create hand here
+    # Display hand
     print(game.get_hand())
 
-    # Print hand to console (?)
-    # Display possible words (?)
-
+    # Display possible words
     possible_words(game.get_hand())
-
-# Creates an array of all letters and blanks in a standard Scrabble game according to the Scrabble manual
 
 
 # compare any given hand to the Scrabble words list to find possible words
