@@ -7,6 +7,7 @@ import itertools
 
 # Reads the text file full of acceptable words in Scrabble and makes an array out of it
 # text file taken from https://github.com/redbo/scrabble/blob/master/dictionary.txt
+<<<<<<< HEAD
 def create_word_set():
     f = open("scrabble_bot/scrabble_words.txt", "r")
     words = set()
@@ -15,6 +16,24 @@ def create_word_set():
         words.add(x)
 
     return words
+=======
+# def create_word_set():
+#     f = open("scrabble_words.txt", "r")
+#     words = set()
+#     for x in f:
+#         x = x.replace("\n", '')
+#         words.add(x)
+
+#     return words
+
+# Suggested integration of WordSet class
+def main():
+    word_set = WordSet("scrabble_words.txt")
+    # Generate letters here
+    # Create hand here
+    # Print hand to console (?)
+    # Display possible words (?)
+>>>>>>> a1ed915b51d3d48cdad568a0955b3899ecc76bda
 
 # Creates an array of all letters and blanks in a standard Scrabble game according to the Scrabble manual
 def generate_letters():
