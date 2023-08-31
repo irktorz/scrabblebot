@@ -108,11 +108,4 @@ def main():
     possible_words(hand)
     
 
-    #app.run()
-    
-
-
-    
-
-
 main()
