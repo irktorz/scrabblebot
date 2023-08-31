@@ -8,7 +8,7 @@ import itertools
 # Reads the text file full of acceptable words in Scrabble and makes an array out of it
 # text file taken from https://github.com/redbo/scrabble/blob/master/dictionary.txt
 def create_word_set():
-    f = open("scrabble_words.txt", "r")
+    f = open("scrabble_bot/scrabble_words.txt", "r")
     words = set()
     for x in f:
         x = x.replace("\n", '')
