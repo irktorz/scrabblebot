@@ -9,6 +9,14 @@ class Scrabble:
         self.word_set = WordSet("scrabble_bot/scrabble_words.txt")
         self.available = self.generate_letters()
         self.hand = self.generate_hand(self.available)
+        self.points = {1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'S', 'T', 'R'],
+                       2: ['D', 'G'],
+                       3: ['B', 'C', 'M', 'P'],
+                       4: ['F', 'H', 'V', 'W', 'Y'],
+                       5: ['K'],
+                       8: ['J', 'X'],
+                       10: ['Q', 'Z'],
+                       0: '%'}
 
     # generates all letters available in a standard game of Scrabble
     def generate_letters(self):
@@ -67,7 +75,7 @@ class Scrabble:
             elif i < 98:
                 letters.append('Z')
             elif i < 100:
-                letters.append("BLANK")
+                letters.append("%")
 
         return letters
 
