@@ -7,7 +7,7 @@ import itertools
 
 # Reads the text file full of acceptable words in Scrabble and makes an array out of it
 # text file taken from https://github.com/redbo/scrabble/blob/master/dictionary.txt
-def create_word_list():
+def create_word_set():
     f = open("scrabble_words.txt", "r")
     words = set()
     for x in f:
@@ -80,59 +80,23 @@ def generate_letters():
 
 # compare any given hand to the Scrabble words list to find possible words
 def possible_words(hand):
-    words = create_word_list()
+    words = create_word_set()
     combos = []
 
-    # create an array of 13700 possible combinations of 7 letters
+    # create an array of possible words by comparing all combinations to the word set
     for i in range(len(hand) + 1):
         for subset in itertools.permutations(hand, i):
-            wr = ''.join(subset)
+            wr = ''.join(subset)   # turn the list of characters into a string
             if wr in words and wr not in combos:
                 combos.append(wr)
 
     print(combos)
+    return combos
 
-
-
-
-    
-    
-
-
-'''
-class MyWindow(Window):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        #set window size
-        self.set_minimum_size(700, 700)
-
-        #set background color
-        background_color = [255, 255, 255, 255]
-        background_color = [i / 255 for i in background_color]
-        glClearColor(*background_color)
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        pass
-
-    def on_mouse_release(self, x, y, button, modifiers):
-        pass
-
-    def on_draw(self):
-        pass
-
-    def update(self):
-        pass
-
-frame_rate = 30
-'''
 
 def main():
-    #win = MyWindow(700, 700, "Scrabble", resizable = False)
-    #pyglet.clock.schedule_interval(window.update, 1/frame_rate)
-    
     available = generate_letters()
-    words = create_word_list()
+    words = create_word_set()
 
     hand = []
     for i in range(7):
