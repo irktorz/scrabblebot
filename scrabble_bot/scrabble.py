@@ -90,6 +90,30 @@ class Scrabble:
         self.hand = hand
         return hand
 
+    def possible_words(self, hand):
+        words = WordSet("scrabble_bot/scrabble_words.txt")
+        combos = []
+
+        # create an array of possible words by comparing all combinations to the word set
+        for i in range(len(hand) + 1):
+            for subset in itertools.permutations(hand, i):
+                # turn the list of characters into a string
+                wr = ''.join(subset)
+                if wr in words.get_all_word() and wr not in combos:
+                    combos.append(wr)
+
+        for wrds in combos:
+            word_value = 0
+            for ltr in wrds:
+                for i in self.points:
+                    if ltr in self.points[i]:
+                        letter_value = i
+                word_value = word_value + letter_value
+
+            print(wrds, word_value)
+
+        return combos
+
     # returns the hand
     def get_hand(self):
         return self.hand
@@ -107,23 +131,10 @@ def main():
     print(game.get_hand())
 
     # Display possible words
-    possible_words(game.get_hand())
+    game.possible_words(game.get_hand())
 
 
 # compare any given hand to the Scrabble words list to find possible words
-def possible_words(hand):
-    words = WordSet("scrabble_bot/scrabble_words.txt")
-    combos = []
-
-    # create an array of possible words by comparing all combinations to the word set
-    for i in range(len(hand) + 1):
-        for subset in itertools.permutations(hand, i):
-            wr = ''.join(subset)   # turn the list of characters into a string
-            if wr in words.get_all_word() and wr not in combos:
-                combos.append(wr)
-
-    print(combos)
-    return combos
 
 
 main()
