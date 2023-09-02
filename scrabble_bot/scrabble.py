@@ -99,9 +99,27 @@ class Scrabble:
             for subset in itertools.permutations(hand, i):
                 # turn the list of characters into a string
                 wr = ''.join(subset)
-                if wr in words.get_all_word() and wr not in combos:
-                    combos.append(wr)
 
+                # if there is a blank, replace the blank with every letter to check for possible words.
+                # the word will be appended as a blank instead of the letter it gets replaced with so as not 
+                # to count its points
+                if '%' in hand:
+                    for j in self.points:
+                        for m in self.points[j]:
+                            blnk = wr.replace('%', m)
+                            if blnk in words.get_all_word() and blnk not in combos:
+                                combos.append(wr)
+                
+                else:
+                    if wr in words.get_all_word() and wr not in combos:
+                        combos.append(wr)
+
+        return combos
+    
+
+    def get_values(self, combos):
+        # calculate the value of the possible words
+        word_values = []
         for wrds in combos:
             word_value = 0
             for ltr in wrds:
@@ -110,9 +128,12 @@ class Scrabble:
                         letter_value = i
                 word_value = word_value + letter_value
 
-            print(wrds, word_value)
+            word_values.append(word_value)
 
-        return combos
+        
+
+        return word_values
+
 
     # returns the hand
     def get_hand(self):
@@ -131,8 +152,26 @@ def main():
     print(game.get_hand())
 
     # Display possible words
-    game.possible_words(game.get_hand())
+    possible_words = game.possible_words(game.get_hand())
+    values = game.get_values(possible_words)
 
+    # print the amount of possible words and the highest value words in a given hand
+    print("\nAmount of possible words: ", len(possible_words))
+    max_indeces = []
+    maxint = max(values)
+    index = 0
+    for value in values:
+        if value == maxint:
+            max_indeces.append(index)
+        index = index + 1
+
+    print("\nHighest value word(s):       ")
+    for max_words in max_indeces:
+        print("         ", possible_words[max_words], values[max_words])
+
+    print("\nAll words and their values:  ")
+    for i in range(len(possible_words)):
+        print("         ", possible_words[i], values[i])
 
 # compare any given hand to the Scrabble words list to find possible words
 
