@@ -107,7 +107,7 @@ class Scrabble:
                     for j in self.points:
                         for m in self.points[j]:
                             blnk = wr.replace('%', m)
-                            if blnk in words.get_all_word() and blnk not in combos:
+                            if blnk in words.get_all_word() and wr not in combos:
                                 combos.append(wr)
                 
                 else:
@@ -169,11 +169,10 @@ def main():
     for max_words in max_indeces:
         print("         ", possible_words[max_words], values[max_words])
 
-    print("\nAll words and their values:  ")
-    for i in range(len(possible_words)):
-        print("         ", possible_words[i], values[i])
-
-# compare any given hand to the Scrabble words list to find possible words
+    if len(possible_words) < 200:
+        print("\nAll words and their values:  ")
+        for i in range(len(possible_words)):
+            print("         ", possible_words[i], values[i])
 
 
 main()
