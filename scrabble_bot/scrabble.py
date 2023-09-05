@@ -155,7 +155,7 @@ def main():
     possible_words = game.possible_words(game.get_hand())
     values = game.get_values(possible_words)
 
-    # print the amount of possible words and the highest value words in a given hand
+    # print the highest value words in a given hand
     print("\nAmount of possible words: ", len(possible_words))
     max_indeces = []
     maxint = max(values)
