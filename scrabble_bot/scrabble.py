@@ -3,10 +3,14 @@ from collections import Counter
 import itertools
 from WordSet import *
 
-
+# TODO: 
+#
+#       figure out how to incorporate the game.
+#
 class Scrabble:
     def __init__(self):
-        self.word_set = WordSet("scrabble_bot/scrabble_words.txt")
+        self.word_set = WordSet("scrabble_words.txt")
+        self.blank_list = []
         self.available = self.generate_letters()
         self.hand = self.generate_hand(self.available)
         self.points = {1: ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'S', 'T', 'R'],
@@ -90,9 +94,11 @@ class Scrabble:
         self.hand = hand
         return hand
 
+    # takes a hand of 7 letters and returns a list of words that can be made of those 7 letters
     def possible_words(self, hand):
-        words = WordSet("scrabble_bot/scrabble_words.txt")
+        words = WordSet("scrabble_words.txt")
         combos = []
+        blank_combos = []
 
         # create an array of possible words by comparing all combinations to the word set
         for i in range(len(hand) + 1):
@@ -102,17 +108,24 @@ class Scrabble:
 
                 # if there is a blank, replace the blank with every letter to check for possible words.
                 # the word will be appended as a blank instead of the letter it gets replaced with so as not 
-                # to count its points
+                # to count the replacement letter's points
                 if '%' in hand:
                     for j in self.points:
                         for m in self.points[j]:
+                            wr_ = wr
                             blnk = wr.replace('%', m)
                             if blnk in words.get_all_word() and wr not in combos:
                                 combos.append(wr)
+
+                                blnk_word = wr_.replace('%', '[' + m + ']')
+                                blank_combos.append(blnk_word)
                 
                 else:
                     if wr in words.get_all_word() and wr not in combos:
                         combos.append(wr)
+                        blank_combos.append(wr)
+
+        self.get_blanks(blank_combos)
 
         return combos
     
@@ -133,7 +146,10 @@ class Scrabble:
         
 
         return word_values
+    
 
+    def get_blanks(self, words):
+        self.blank_list = words
 
     # returns the hand
     def get_hand(self):
@@ -167,12 +183,12 @@ def main():
 
     print("\nHighest value word(s):       ")
     for max_words in max_indeces:
-        print("         ", possible_words[max_words], values[max_words])
+        print("         ", game.blank_list[max_words], values[max_words])
 
     if len(possible_words) < 200:
         print("\nAll words and their values:  ")
         for i in range(len(possible_words)):
-            print("         ", possible_words[i], values[i])
+            print("         ", game.blank_list[i], values[i])
 
 
-main()
+#main()
